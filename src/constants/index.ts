@@ -1,0 +1,60 @@
+import { generateId } from "@/utils";
+import { Book } from "@/schema/bookSchema";
+
+export const books: Book[] = [
+  {
+    id: generateId(),
+    title: "To Kill a Mockingbird",
+    author: "Harper Lee",
+    publicationDate: new Date("1960-07-11"),
+    publisher: "J.B. Lippincott & Co.",
+    numberOfPage: 281,
+    genre: "Fiction",
+    language: "English",
+    price: 18.99,
+  },
+  {
+    id: generateId(),
+    title: "1984",
+    author: "George Orwell",
+    publicationDate: new Date("1949-06-08"),
+    publisher: "Secker & Warburg",
+    numberOfPage: 328,
+    genre: "Dystopian",
+    language: "English",
+    price: 14.99,
+  },
+  {
+    id: generateId(),
+    title: "One Hundred Years of Solitude",
+    author: "Gabriel Garcia Marquez",
+    publicationDate: new Date("1967-06-05"),
+    publisher: "Harper & Row",
+    numberOfPage: 417,
+    genre: "Magic Realism",
+    language: "Spanish",
+    price: 25.00,
+  },
+  {
+    id: generateId(),
+    title: "The Great Gatsby",
+    author: "F. Scott Fitzgerald",
+    publicationDate: new Date("1925-04-10"),
+    publisher: "Charles Scribner's Sons",
+    numberOfPage: 218,
+    genre: "Tragedy",
+    language: "English",
+    price: 10.99,
+  },
+  {
+    id: generateId(),
+    title: "Moby-Dick",
+    author: "Herman Melville",
+    publicationDate: new Date("1851-10-18"),
+    publisher: "Harper & Brothers",
+    numberOfPage: 585,
+    genre: "Adventure",
+    language: "English",
+    price: 22.50,
+  }
+];
