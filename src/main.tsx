@@ -3,6 +3,7 @@ import { books } from "./constants";
 import { createRoot } from "react-dom/client";
 import BooksTable from "./components/books-table";
 import { bookColumns } from "./components/columns";
+import CreateBookModal from "./components/create-book-modal";
 
 import "./index.css";
 
@@ -17,7 +18,10 @@ createRoot(document.getElementById("root")!).render(
         </p>
       </section>
 
-      <section className="mt-4">
+      <section className="mt-4 flex flex-col gap-4">
+        <div className="flex justify-end">
+          <CreateBookModal />
+        </div>
         <BooksTable columns={bookColumns} data={books} />
       </section>
     </main>
