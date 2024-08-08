@@ -16,7 +16,7 @@ createRoot(document.getElementById("root")!).render(
           integrating the api I previously built called library-api.{" "}
         </p>
       </section>
-      
+
       <section className="mt-4">
         <BooksTable columns={bookColumns} data={books} />
       </section>

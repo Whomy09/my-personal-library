@@ -1,6 +1,15 @@
 import { format } from "date-fns";
+import { Ellipsis } from "lucide-react";
 import { Book } from "@/schema/bookSchema";
 import { ColumnDef } from "@tanstack/react-table";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
 export const bookColumns: ColumnDef<Book>[] = [
   {
     accessorKey: "id",
@@ -42,5 +51,22 @@ export const bookColumns: ColumnDef<Book>[] = [
   {
     accessorKey: "price",
     header: "Price",
+  },
+  {
+    accessorKey: "actions",
+    header: "Actions",
+    cell: () => {
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Ellipsis />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem>Edit</DropdownMenuItem>
+            <DropdownMenuItem>Delete</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
   },
 ];
