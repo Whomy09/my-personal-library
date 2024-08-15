@@ -29,9 +29,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { UseMutationResult } from "react-query";
+import { useToast } from "./ui/use-toast";
 
 const CreateBookModal = ({
   mutationCreateBook,
+  open,
+  setState,
 }: {
   mutationCreateBook: UseMutationResult<
     unknown,
@@ -39,7 +42,12 @@ const CreateBookModal = ({
     BookCreateSchema,
     unknown
   >;
+  open: boolean;
+  setState: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const { toast } = useToast();
+  const { isLoading } = mutationCreateBook;
+
   const form = useForm<BookCreateSchema>({
     resolver: zodResolver(bookCreateSchema),
     defaultValues: {
@@ -55,12 +63,26 @@ const CreateBookModal = ({
   });
 
   function onSubmit(values: BookCreateSchema) {
-    mutationCreateBook.mutate(values);
-    form.reset();
+    mutationCreateBook.mutate(values, {
+      onSuccess: () => {
+        toast({
+          title: "Create book successfully!",
+          className: "bg-green-400 text-green-500 border border-green-500",
+        });
+        setState(false);
+        form.reset();
+      },
+      onError: () => {
+        toast({
+          title: "Create book error!",
+          className: "bg-red-400 text-red-500 border border-red-500",
+        });
+      },
+    });
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setState}>
       <DialogTrigger asChild>
         <Button variant="outline">Create book</Button>
       </DialogTrigger>
@@ -81,7 +103,11 @@ const CreateBookModal = ({
                   <FormItem>
                     <FormLabel>Title</FormLabel>
                     <FormControl>
-                      <Input placeholder="title" {...field} />
+                      <Input
+                        placeholder="title"
+                        {...field}
+                        disabled={isLoading}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -94,7 +120,11 @@ const CreateBookModal = ({
                   <FormItem>
                     <FormLabel>Author</FormLabel>
                     <FormControl>
-                      <Input placeholder="author" {...field} />
+                      <Input
+                        placeholder="author"
+                        {...field}
+                        disabled={isLoading}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -110,7 +140,11 @@ const CreateBookModal = ({
                   <FormItem>
                     <FormLabel>Genre</FormLabel>
                     <FormControl>
-                      <Input placeholder="genre" {...field} />
+                      <Input
+                        placeholder="genre"
+                        {...field}
+                        disabled={isLoading}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -123,7 +157,11 @@ const CreateBookModal = ({
                   <FormItem>
                     <FormLabel>Language</FormLabel>
                     <FormControl>
-                      <Input placeholder="language" {...field} />
+                      <Input
+                        placeholder="language"
+                        {...field}
+                        disabled={isLoading}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -139,7 +177,11 @@ const CreateBookModal = ({
                   <FormItem>
                     <FormLabel>Publisher</FormLabel>
                     <FormControl>
-                      <Input placeholder="publisher" {...field} />
+                      <Input
+                        placeholder="publisher"
+                        {...field}
+                        disabled={isLoading}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -156,6 +198,7 @@ const CreateBookModal = ({
                         type="number"
                         placeholder="number of pages"
                         {...field}
+                        disabled={isLoading}
                         onChange={(e) => field.onChange(Number(e.target.value))}
                       />
                     </FormControl>
@@ -177,6 +220,7 @@ const CreateBookModal = ({
                         type="number"
                         placeholder="Price"
                         {...field}
+                        disabled={isLoading}
                         onChange={(e) => field.onChange(Number(e.target.value))}
                       />
                     </FormControl>
@@ -195,6 +239,7 @@ const CreateBookModal = ({
                         <FormControl>
                           <Button
                             variant={"outline"}
+                            disabled={isLoading}
                             className={cn(
                               "w-[240px] pl-3 text-left font-normal",
                               !field.value && "text-muted-foreground"
@@ -228,8 +273,9 @@ const CreateBookModal = ({
               <Button
                 type="submit"
                 className="bg-green-500 duration transition-500 hover:bg-green-600"
+                disabled={isLoading}
               >
-                Create
+                {isLoading ? "Loading..." : "Create"}
               </Button>
             </div>
           </form>

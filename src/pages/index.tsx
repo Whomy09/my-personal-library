@@ -1,38 +1,19 @@
 import BooksTable from "@/components/books-table";
 import { bookColumns } from "@/components/columns";
-import { Book, BookCreateSchema } from "@/schema/bookSchema";
+import { createBook, getBooks } from "@/services/book";
 import CreateBookModal from "@/components/create-book-modal";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-
-function generateRandomNumber() {
-  return Math.floor(Math.random() * 9000000) + 1000000;
-}
-
-function getBooks() {
-  const books = JSON.parse(localStorage.getItem("books") || "[]") as Book[];
-  return books;
-}
-
-function createBook(book: BookCreateSchema) {
-  return new Promise((resolve) => {
-    const books = getBooks();
-    books.push({
-      ...book,
-      id: `${generateRandomNumber()}`,
-    });
-    localStorage.setItem("books", JSON.stringify(books));
-    setTimeout(() => resolve(true), 5000);
-  });
-}
+import { useState } from "react";
 
 export default function App() {
   const queryClient = useQueryClient();
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
   const { data: books, isLoading, error } = useQuery("books", getBooks);
 
   const mutationCreateBook = useMutation(createBook, {
     onSuccess: () => {
-      queryClient.invalidateQueries();
+      queryClient.invalidateQueries("books");
     },
   });
 
@@ -48,7 +29,11 @@ export default function App() {
         </section>
         <section className="mt-4 flex flex-col gap-4">
           <div className="flex justify-end">
-            <CreateBookModal mutationCreateBook={mutationCreateBook} />
+            <CreateBookModal
+              mutationCreateBook={mutationCreateBook}
+              open={showCreateModal}
+              setState={setShowCreateModal}
+            />
           </div>
           {isLoading ? (
             <p>Loading books...</p>
