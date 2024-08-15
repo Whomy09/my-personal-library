@@ -14,7 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -28,8 +28,18 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { UseMutationResult } from "react-query";
 
-const CreateBookModal = () => {
+const CreateBookModal = ({
+  mutationCreateBook,
+}: {
+  mutationCreateBook: UseMutationResult<
+    unknown,
+    unknown,
+    BookCreateSchema,
+    unknown
+  >;
+}) => {
   const form = useForm<BookCreateSchema>({
     resolver: zodResolver(bookCreateSchema),
     defaultValues: {
@@ -45,7 +55,7 @@ const CreateBookModal = () => {
   });
 
   function onSubmit(values: BookCreateSchema) {
-    console.log(values);
+    mutationCreateBook.mutate(values);
     form.reset();
   }
 
