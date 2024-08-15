@@ -17,17 +17,27 @@ export const createBook = (newBook: BookCreateSchema) => {
       id: generateId(),
     };
 
-    let books: Book[] = [];
-
-    getBooks().then((_books) => {
-      books = _books;
-
+    getBooks().then((books) => {
       books.push(book);
 
       setLocalStorage<Book[]>("books", books);
 
       setTimeout(() => {
         resolve(book);
+      }, 5000);
+    });
+  });
+};
+
+export const deleteBook = (bookId: string) => {
+  return new Promise((resolve) => {
+    getBooks().then((books) => {
+      const filteredBooks = books.filter(({ id }) => bookId !== id);
+
+      setLocalStorage<Book[]>("books", filteredBooks);
+
+      setTimeout(() => {
+        resolve(filteredBooks);
       }, 5000);
     });
   });

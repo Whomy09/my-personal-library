@@ -56,6 +56,8 @@ export const bookColumns: ColumnDef<Book>[] = [
     accessorKey: "actions",
     header: "Actions",
     cell: () => {
+      
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger>
