@@ -1,7 +1,10 @@
-import { Ellipsis, LoaderCircle } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
 import { useToast } from "./ui/use-toast";
 import { Book } from "@/schema/bookSchema";
-import { deleteBook } from "@/services/book";
+import EditBookModal from "./edit-book-modal";
+import { Ellipsis, LoaderCircle } from "lucide-react";
+import { deleteBook, updateBook } from "@/services/book";
 import { useMutation, useQueryClient } from "react-query";
 
 import {
@@ -10,32 +13,36 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/utils";
 
 type BookTableOptionsProps = {
   book: Book;
 };
 
 const BookTableOptions = ({ book }: BookTableOptionsProps) => {
+  const [showEditBookModal, setShowEditBookModal] = useState(false);
+
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const { isLoading, mutate } = useMutation(
-    deleteBook,
-    {
-      onSuccess: () => {
-        toast({
-          title: "Book successfully deleted",
-        });
-        queryClient.invalidateQueries("books");
-      },
-      onError: () => {
-        toast({
-          title: "Error deleting book",
-        });
-      },
-    }
-  );
+  const { isLoading, mutate } = useMutation(deleteBook, {
+    onSuccess: () => {
+      toast({
+        title: "Book successfully deleted",
+      });
+      queryClient.invalidateQueries("books");
+    },
+    onError: () => {
+      toast({
+        title: "Error deleting book",
+      });
+    },
+  });
+
+  const mutationEditBook = useMutation(updateBook, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("books");
+    },
+  });
 
   return (
     <>
@@ -45,12 +52,19 @@ const BookTableOptions = ({ book }: BookTableOptionsProps) => {
           {isLoading && <LoaderCircle className="animate-spin" />}
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem>Edit</DropdownMenuItem>
+          <DropdownMenuItem onSelect={() => setShowEditBookModal(true)}>Edit</DropdownMenuItem>
           <DropdownMenuItem onSelect={() => mutate(book.id)}>
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <EditBookModal
+        open={showEditBookModal}
+        mutationEditBook={mutationEditBook}
+        book={book}
+        setState={setShowEditBookModal}
+      />
     </>
   );
 };

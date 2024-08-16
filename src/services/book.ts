@@ -6,11 +6,11 @@ export const getBooks = (): Promise<Book[]> => {
     setTimeout(() => {
       const books = getLocalStorage<Book[]>("books");
       resolve(books);
-    }, 5000);
+    }, 2000);
   });
 };
 
-export const createBook = (newBook: BookCreateSchema) => {
+export const createBook = (newBook: BookCreateSchema): Promise<Book> => {
   return new Promise((resolve) => {
     const book: Book = {
       ...newBook,
@@ -24,12 +24,12 @@ export const createBook = (newBook: BookCreateSchema) => {
 
       setTimeout(() => {
         resolve(book);
-      }, 5000);
+      }, 2000);
     });
   });
 };
 
-export const deleteBook = (bookId: string) => {
+export const deleteBook = (bookId: string): Promise<Book[]> => {
   return new Promise((resolve) => {
     getBooks().then((books) => {
       const filteredBooks = books.filter(({ id }) => bookId !== id);
@@ -38,7 +38,28 @@ export const deleteBook = (bookId: string) => {
 
       setTimeout(() => {
         resolve(filteredBooks);
-      }, 5000);
+      }, 2000);
+    });
+  });
+};
+
+export const updateBook = (editedBook: Partial<Book>) => {
+  return new Promise((resolve) => {
+    getBooks().then((books) => {
+      const arrayWithEditedBook = books.map((book) => {
+        if (book.id !== editedBook.id) return book;
+
+        return {
+          ...book,
+          ...editedBook,
+        };
+      });
+
+      setLocalStorage("books", arrayWithEditedBook);
+
+      setTimeout(() => {
+        resolve(arrayWithEditedBook);
+      }, 2000);
     });
   });
 };
