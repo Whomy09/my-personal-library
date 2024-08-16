@@ -6,9 +6,15 @@ import CreateBookModal from "@/components/create-book-modal";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
 export default function App() {
-  const queryClient = useQueryClient();
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const { data: books, isLoading, error } = useQuery("books", getBooks);
+  
+  const queryClient = useQueryClient();
+  const {
+    error,
+    isError,
+    data: books,
+    isFetching,
+  } = useQuery("books", getBooks);
 
   const mutationCreateBook = useMutation(createBook, {
     onSuccess: () => {
@@ -26,6 +32,7 @@ export default function App() {
             integrating the api I previously built called library-api.{" "}
           </p>
         </section>
+        
         <section className="mt-4 flex flex-col gap-4">
           <div className="flex justify-end">
             <CreateBookModal
@@ -34,13 +41,13 @@ export default function App() {
               setState={setShowCreateModal}
             />
           </div>
-          {isLoading ? (
-            <p>Loading books...</p>
-          ) : error ? (
-            <p>Error loading books: {`${error}`}</p>
-          ) : (
+          {isFetching && <p>Loading books...</p>}
+          
+          {!isFetching && (
             <BooksTable columns={bookColumns} data={books || []} />
           )}
+          
+          {isError && <p>Error loading books: {`${error}`}</p>}
         </section>
       </main>
     </>

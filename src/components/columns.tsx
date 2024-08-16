@@ -1,14 +1,8 @@
 import { format } from "date-fns";
-import { Ellipsis } from "lucide-react";
 import { Book } from "@/schema/bookSchema";
 import { ColumnDef } from "@tanstack/react-table";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import BookTableOptions from "./book-table-options";
 
 export const bookColumns: ColumnDef<Book>[] = [
   {
@@ -55,20 +49,8 @@ export const bookColumns: ColumnDef<Book>[] = [
   {
     accessorKey: "actions",
     header: "Actions",
-    cell: () => {
-      
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Ellipsis />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+    cell: ({ row }) => {
+      return <BookTableOptions book={row.original} />;
     },
   },
 ];
