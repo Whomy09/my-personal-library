@@ -1,11 +1,11 @@
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { useToast } from "./ui/use-toast";
 import { useForm } from "react-hook-form";
 import { CalendarIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { UseMutationResult } from "react-query";
+import { useNotifications } from "@/hooks/toast";
 import { Calendar } from "@/components/ui/calendar";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BookCreateSchema, bookCreateSchema } from "@/schema/bookSchema";
@@ -41,12 +41,13 @@ type CreateBookModalProps = {
 };
 
 const CreateBookModal = ({
-  mutationCreateBook,
   open,
-  onOpenChange: setState,
+  onOpenChange,
+  mutationCreateBook,
 }: CreateBookModalProps) => {
-  const { toast } = useToast();
   const { isLoading, mutate } = mutationCreateBook;
+
+  const { successNotification, errorNotification } = useNotifications();
 
   const form = useForm<BookCreateSchema>({
     resolver: zodResolver(bookCreateSchema),
@@ -65,25 +66,23 @@ const CreateBookModal = ({
   const onSubmit = (values: BookCreateSchema) =>
     mutate(values, {
       onSuccess: () => {
-        toast({
+        successNotification({
           title: "Create book successfully!",
-          className: "bg-green-400 text-green-500 border border-green-500",
         });
-        setState(false);
         form.reset();
+        onOpenChange(false);
       },
       onError: () => {
-        toast({
+        errorNotification({
           title: "Create book error!",
-          className: "bg-red-400 text-red-500 border border-red-500",
         });
       },
     });
 
   return (
-    <Dialog open={open} onOpenChange={setState}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
-        <Button variant="outline">Create book</Button>
+        <Button>Create book</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
