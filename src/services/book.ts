@@ -1,5 +1,5 @@
 import { HttpClient } from "./http";
-import { generateId, setLocalStorage } from "@/utils";
+import { setLocalStorage } from "@/utils";
 import { Book, BookCreateSchema } from "@/schema/bookSchema";
 
 const http = HttpClient.getInstance();
@@ -9,23 +9,8 @@ export const getBooks = async () => {
   return books;
 };
 
-export const createBook = (newBook: BookCreateSchema): Promise<Book> => {
-  return new Promise((resolve) => {
-    const book: Book = {
-      ...newBook,
-      id: generateId(),
-    };
-
-    getBooks().then((books) => {
-      books.push(book);
-
-      setLocalStorage<Book[]>("books", books);
-
-      setTimeout(() => {
-        resolve(book);
-      }, 2000);
-    });
-  });
+export const createBook = async (newBook: BookCreateSchema) => {
+  await http.post<BookCreateSchema>("/book", newBook);
 };
 
 export const deleteBook = async (bookId: string) => {
