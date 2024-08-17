@@ -42,7 +42,7 @@ const App = () => {
             <CreateBookModal
               mutationCreateBook={mutationCreateBook}
               open={showCreateModal}
-              setState={setShowCreateModal}
+              onOpenChange={setShowCreateModal}
             />
           </div>
           {isLoading && <p>Loading books...</p>}

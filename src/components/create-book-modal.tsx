@@ -1,12 +1,15 @@
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
+import { useToast } from "./ui/use-toast";
 import { useForm } from "react-hook-form";
 import { CalendarIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { UseMutationResult } from "react-query";
 import { Calendar } from "@/components/ui/calendar";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BookCreateSchema, bookCreateSchema } from "@/schema/bookSchema";
+
 import {
   Dialog,
   DialogContent,
@@ -15,6 +18,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+
 import {
   Form,
   FormControl,
@@ -23,30 +27,26 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { UseMutationResult } from "react-query";
-import { useToast } from "./ui/use-toast";
+
+type CreateBookModalProps = {
+  open: boolean;
+  onOpenChange: (value: boolean) => void;
+  mutationCreateBook: UseMutationResult<unknown, unknown, BookCreateSchema>;
+};
 
 const CreateBookModal = ({
   mutationCreateBook,
   open,
-  setState,
-}: {
-  mutationCreateBook: UseMutationResult<
-    unknown,
-    unknown,
-    BookCreateSchema,
-    unknown
-  >;
-  open: boolean;
-  setState: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+  onOpenChange: setState,
+}: CreateBookModalProps) => {
   const { toast } = useToast();
-  const { isLoading } = mutationCreateBook;
+  const { isLoading, mutate } = mutationCreateBook;
 
   const form = useForm<BookCreateSchema>({
     resolver: zodResolver(bookCreateSchema),
@@ -62,8 +62,8 @@ const CreateBookModal = ({
     },
   });
 
-  function onSubmit(values: BookCreateSchema) {
-    mutationCreateBook.mutate(values, {
+  const onSubmit = (values: BookCreateSchema) =>
+    mutate(values, {
       onSuccess: () => {
         toast({
           title: "Create book successfully!",
@@ -79,7 +79,6 @@ const CreateBookModal = ({
         });
       },
     });
-  }
 
   return (
     <Dialog open={open} onOpenChange={setState}>
