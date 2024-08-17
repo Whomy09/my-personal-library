@@ -6,7 +6,7 @@ export class HttpClient {
 
   private constructor() {
     this._client = axios.create({
-      baseURL: import.meta.env.VITE_API_BASE_URL,
+      baseURL: import.meta.env.VITE_API_BASE_LOCAL,
     });
 
     this._client.interceptors.response.use(

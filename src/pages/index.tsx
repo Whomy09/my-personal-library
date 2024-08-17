@@ -26,7 +26,7 @@ const App = () => {
 
   return (
     <>
-      <main className="my-8 lg:max-w-4xl lg:mx-auto">
+      <main className="my-8 lg:max-w-5xl lg:mx-auto">
         <section className="flex flex-col gap-4">
           <header className="flex items-center gap-2">
             <LibraryBig />

@@ -8,6 +8,18 @@ export const bookColumns: ColumnDef<Book>[] = [
   {
     accessorKey: "id",
     header: "ID",
+    cell: ({ row }) => {
+      const id = row.getValue("id") as string;
+
+      if (id.length < 12) return id;
+
+      const formattedId = `${id.slice(0, 2)}...${id.slice(
+        id.length - 2,
+        id.length
+      )}`;
+
+      return formattedId;
+    },
   },
   {
     accessorKey: "title",
@@ -45,6 +57,9 @@ export const bookColumns: ColumnDef<Book>[] = [
   {
     accessorKey: "price",
     header: "Price",
+    cell: ({ row }) => {
+      return `$${row.getValue("price")}`;
+    },
   },
   {
     accessorKey: "actions",
