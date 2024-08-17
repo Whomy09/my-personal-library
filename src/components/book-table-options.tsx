@@ -52,7 +52,9 @@ const BookTableOptions = ({ book }: BookTableOptionsProps) => {
           {isLoading && <LoaderCircle className="animate-spin" />}
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem onSelect={() => setShowEditBookModal(true)}>Edit</DropdownMenuItem>
+          <DropdownMenuItem onSelect={() => setShowEditBookModal(true)}>
+            Edit
+          </DropdownMenuItem>
           <DropdownMenuItem onSelect={() => mutate(book.id)}>
             Delete
           </DropdownMenuItem>
@@ -63,7 +65,7 @@ const BookTableOptions = ({ book }: BookTableOptionsProps) => {
         open={showEditBookModal}
         mutationEditBook={mutationEditBook}
         book={book}
-        setState={setShowEditBookModal}
+        onOpenChange={setShowEditBookModal}
       />
     </>
   );

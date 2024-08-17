@@ -4,7 +4,6 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar";
 import { useForm } from "react-hook-form";
-import { useToast } from "./ui/use-toast";
 import { CalendarIcon } from "lucide-react";
 import { UseMutationResult } from "react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -32,22 +31,23 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useNotifications } from "@/hooks/toast";
 
 type EditBookModalProps = {
   book: Book;
   open: boolean;
-  setState: (value: boolean) => void;
+  onOpenChange: (value: boolean) => void;
   mutationEditBook: UseMutationResult<unknown, unknown, Partial<Book>>;
 };
 
 const EditBookModal = ({
   book,
   open,
-  setState,
+  onOpenChange,
   mutationEditBook,
 }: EditBookModalProps) => {
-  const { toast } = useToast();
   const { isLoading, mutate } = mutationEditBook;
+  const { successNotification, errorNotification } = useNotifications();
 
   const form = useForm<Book>({
     resolver: zodResolver(bookSchema),
@@ -60,16 +60,14 @@ const EditBookModal = ({
   const onSubmit = (book: Book) =>
     mutate(book, {
       onSuccess: () => {
-        toast({
+        successNotification({
           title: "Edit book successfully!",
-          className: "bg-green-400 text-green-500 border border-green-500",
         });
-        setState(false);
+        onOpenChange(false);
       },
       onError: () => {
-        toast({
+        errorNotification({
           title: "Edit book error!",
-          className: "bg-red-400 text-red-500 border border-red-500",
         });
       },
       onSettled: () => {
@@ -79,7 +77,7 @@ const EditBookModal = ({
 
   return (
     <>
-      <Dialog open={open} onOpenChange={setState}>
+      <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Edit Book</DialogTitle>
