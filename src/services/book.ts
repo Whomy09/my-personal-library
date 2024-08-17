@@ -6,7 +6,6 @@ const http = HttpClient.getInstance();
 
 export const getBooks = async () => {
   const books = await http.get<Book[]>("/book")
-  console.log(books)
   return books
 };
 
