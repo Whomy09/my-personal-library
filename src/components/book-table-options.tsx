@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { useToast } from "./ui/use-toast";
 import { Book } from "@/schema/bookSchema";
 import EditBookModal from "./edit-book-modal";
+import { useNotifications } from "@/hooks/toast";
 import { Ellipsis, LoaderCircle } from "lucide-react";
 import { deleteBook, updateBook } from "@/services/book";
 import { useMutation, useQueryClient } from "react-query";
@@ -21,19 +21,19 @@ type BookTableOptionsProps = {
 const BookTableOptions = ({ book }: BookTableOptionsProps) => {
   const [showEditBookModal, setShowEditBookModal] = useState(false);
 
-  const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { successNotification, errorNotification } = useNotifications();
 
   const { isLoading, mutate } = useMutation(deleteBook, {
     onSuccess: () => {
-      toast({
-        title: "Book successfully deleted",
+      successNotification({
+        title: "Book successfully deleted!",
       });
       queryClient.invalidateQueries("books");
     },
     onError: () => {
-      toast({
-        title: "Error deleting book",
+      errorNotification({
+        title: "Error deleting book!",
       });
     },
   });
