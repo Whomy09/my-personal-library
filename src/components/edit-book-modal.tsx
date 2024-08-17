@@ -61,13 +61,13 @@ const EditBookModal = ({
     mutate(book, {
       onSuccess: () => {
         successNotification({
-          title: "Edit book successfully!",
+          title: "Book edited successfully!",
         });
         onOpenChange(false);
       },
       onError: () => {
         errorNotification({
-          title: "Edit book error!",
+          title: "Error editing the book",
         });
       },
       onSettled: () => {
