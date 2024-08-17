@@ -1,5 +1,4 @@
 import { HttpClient } from "./http";
-import { setLocalStorage } from "@/utils";
 import { Book, BookCreateSchema } from "@/schema/bookSchema";
 
 const http = HttpClient.getInstance();
@@ -17,23 +16,6 @@ export const deleteBook = async (bookId: string) => {
   await http.delete(`/book/${bookId}`);
 };
 
-export const updateBook = (editedBook: Partial<Book>) => {
-  return new Promise((resolve) => {
-    getBooks().then((books) => {
-      const arrayWithEditedBook = books.map((book) => {
-        if (book.id !== editedBook.id) return book;
-
-        return {
-          ...book,
-          ...editedBook,
-        };
-      });
-
-      setLocalStorage("books", arrayWithEditedBook);
-
-      setTimeout(() => {
-        resolve(arrayWithEditedBook);
-      }, 2000);
-    });
-  });
+export const updateBook = async (editedBook: Partial<Book>) => {
+  await http.patch<Partial<Book>>(`/book/${editedBook.id}`, editedBook);
 };
