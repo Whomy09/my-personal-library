@@ -1,4 +1,4 @@
-export const features = [
+export const FEATURES = [
   {
     title: "Create Your Library",
     description:
@@ -16,7 +16,7 @@ export const features = [
   },
 ];
 
-export const navItems = [
+export const NAVBAR_ITEMS = [
   {
     label: "Home",
     href: "#information-section",
