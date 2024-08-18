@@ -1,5 +1,6 @@
 import { Button } from "../ui/button";
 import { NAVBAR_ITEMS } from "@/constants";
+
 import {
   SignedIn,
   SignedOut,
@@ -9,14 +10,16 @@ import {
 
 const NavbarItems = () => {
   return (
-    <ul className="hidden lg:flex lg:items-center lg:gap-8">
-      <SignedOut>
-        {NAVBAR_ITEMS.map((item, i) => (
-          <li key={i} className="navbar-item">
-            <a href={item.href}>{item.label}</a>
-          </li>
-        ))}
-      </SignedOut>
+    <ul className="lg:flex lg:items-center lg:gap-4">
+      <div className="hidden lg:flex lg:items-center lg:gap-4">
+        <SignedOut>
+          {NAVBAR_ITEMS.map((item, i) => (
+            <li key={i} className="navbar-item">
+              <a href={item.href}>{item.label}</a>
+            </li>
+          ))}
+        </SignedOut>
+      </div>
 
       <SignedOut>
         <Button>
