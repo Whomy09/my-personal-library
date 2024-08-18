@@ -10,8 +10,8 @@ const FeaturesSection = () => {
         <h2 className="text-5xl font-bold">Features</h2>
       </div>
       <div className="flex flex-col gap-4 mb-8 lg:flex-row">
-        {features.map((feature) => (
-          <LibraryFeatureCard feature={feature} />
+        {features.map((feature, i) => (
+          <LibraryFeatureCard key={i} feature={feature} />
         ))}
       </div>
     </>

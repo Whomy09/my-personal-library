@@ -4,11 +4,25 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
+  const navItems = [
+    {
+      label: "Home",
+      href: "#information-section",
+    },
+    {
+      label: "Features",
+      href: "#features-section",
+    },
+    {
+      label: "Social",
+      href: "#footer-section",
+    },
+  ];
+
   return (
     <nav className="flex justify-between">
       <div className="flex gap-2">
@@ -22,23 +36,21 @@ const Navbar = () => {
             <Menu />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem>Option 1</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Option 2</DropdownMenuItem>
+            {navItems.map(({ href, label }, i) => (
+              <DropdownMenuItem key={`${label}-${i}`}>
+                <a href={href}>{label}</a>
+              </DropdownMenuItem>
+            ))}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
 
       <ul className="hidden lg:flex lg:gap-8">
-        <li className="navbar-item">
-          <a href="#information-section">Home</a>
-        </li>
-        <li className="navbar-item">
-          <a href="#features-section">Features</a>
-        </li>
-        <li className="navbar-item">
-          <a href="#footer-section">Social</a>
-        </li>
+        {navItems.map(({ href, label }, i) => (
+          <li key={`${label}-${i}`} className="navbar-item">
+            <a href={href}>{label}</a>
+          </li>
+        ))}
       </ul>
     </nav>
   );
