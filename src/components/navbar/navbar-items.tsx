@@ -1,15 +1,22 @@
 import { Button } from "../ui/button";
 import { NAVBAR_ITEMS } from "@/constants";
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
+import {
+  SignedIn,
+  SignedOut,
+  UserButton,
+  SignInButton,
+} from "@clerk/clerk-react";
 
 const NavbarItems = () => {
   return (
     <ul className="hidden lg:flex lg:items-center lg:gap-8">
-      {NAVBAR_ITEMS.map((item, i) => (
-        <li key={i} className="navbar-item">
-          <a href={item.href}>{item.label}</a>
-        </li>
-      ))}
+      <SignedOut>
+        {NAVBAR_ITEMS.map((item, i) => (
+          <li key={i} className="navbar-item">
+            <a href={item.href}>{item.label}</a>
+          </li>
+        ))}
+      </SignedOut>
 
       <SignedOut>
         <Button>

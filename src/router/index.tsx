@@ -2,6 +2,8 @@ import Home from "@/pages/home";
 import Landing from "@/pages/landing";
 import RootLayout from "@/layouts/root-layout";
 import { createBrowserRouter } from "react-router-dom";
+import PublicRoute from "@/components/route-guards/public-route";
+import ProtectedRoute from "@/components/route-guards/protected-route";
 
 export const router = createBrowserRouter([
   {
@@ -9,11 +11,19 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: (
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/landing",
-        element: <Landing />,
+        element: (
+          <PublicRoute>
+            <Landing />
+          </PublicRoute>
+        ),
       },
     ],
   },
