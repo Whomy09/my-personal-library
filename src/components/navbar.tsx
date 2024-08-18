@@ -1,45 +1,34 @@
+import { useState } from "react";
+import { navItems } from "@/constants";
 import { LibraryBig, Menu } from "lucide-react";
 
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
+  // DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
-  const navItems = [
-    {
-      label: "Home",
-      href: "#information-section",
-    },
-    {
-      label: "Features",
-      href: "#features-section",
-    },
-    {
-      label: "Social",
-      href: "#footer-section",
-    },
-  ];
+  const [open, setOpen] = useState(false);
 
   return (
-    <nav className="flex justify-between">
+    <nav className="flex justify-between h-14 pt-8" id="navbar">
       <div className="flex gap-2">
         <LibraryBig />
         <span className="font-bold">My Personal Library</span>
       </div>
 
       <div className="lg:hidden">
-        <DropdownMenu>
+        <DropdownMenu open={open} onOpenChange={setOpen}>
           <DropdownMenuTrigger>
             <Menu />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             {navItems.map(({ href, label }, i) => (
-              <DropdownMenuItem key={`${label}-${i}`}>
+              <div key={`${label}-${i}`}>
                 <a href={href}>{label}</a>
-              </DropdownMenuItem>
+              </div>
             ))}
           </DropdownMenuContent>
         </DropdownMenu>

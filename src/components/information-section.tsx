@@ -15,7 +15,7 @@ const InformationSection = () => {
           <img
             src="/reading.svg"
             alt="Person reading a book"
-            className="w-[600px]"
+            className="w-[600px] animate-swing"
           />
         </div>
       </div>

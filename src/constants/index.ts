@@ -15,3 +15,18 @@ export const features = [
       "Remove books from your list whenever you want. Organization has never been so simple!",
   },
 ];
+
+export const navItems = [
+  {
+    label: "Home",
+    href: "#information-section",
+  },
+  {
+    label: "Features",
+    href: "#features-section",
+  },
+  {
+    label: "Social",
+    href: "#footer-section",
+  },
+];
