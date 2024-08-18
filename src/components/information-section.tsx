@@ -1,7 +1,7 @@
 const InformationSection = () => {
   return (
     <>
-      <div className="flex justify-between gap-16 pt-8">
+      <div className="flex justify-between gap-16 pt-10" id="information-section">
         <div className="flex flex-col w-full gap-6 justify-center">
           <h2 className="text-4xl text-center lg:text-left lg:text-6xl font-bold">
             Your website to find your favorite books

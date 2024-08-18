@@ -1,17 +1,17 @@
 export const features = [
   {
-    title: "Crea Tu Biblioteca",
+    title: "Create Your Library",
     description:
-      "Añade libros a tu colección personal con un solo clic. ¡Tu próxima aventura literaria comienza aquí!",
+      "Add books to your personal collection with a single click. Your next literary adventure starts here!",
   },
   {
-    title: "Mantén Todo en Orden",
+    title: "Keep Everything Organized",
     description:
-      "Actualiza la información de tus libros favoritos. ¡Haz que tu colección esté siempre al día!",
+      "Update the information of your favorite books. Keep your collection always up to date!",
   },
   {
-    title: "Libérate del Desorden",
+    title: "Declutter with Ease",
     description:
-      "Elimina libros de tu lista cuando quieras. ¡La organización nunca fue tan sencilla!",
+      "Remove books from your list whenever you want. Organization has never been so simple!",
   },
 ];

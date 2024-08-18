@@ -5,7 +5,7 @@ import LibraryFeatureCard from "./library-feature-card";
 const FeaturesSection = () => {
   return (
     <>
-      <div className="flex gap-2 items-center mb-8">
+      <div className="flex gap-2 items-center mb-8" id="features-section">
         <CircleSlash2 />
         <h2 className="text-5xl font-bold">Features</h2>
       </div>

@@ -29,9 +29,16 @@ const Navbar = () => {
         </DropdownMenu>
       </div>
 
-      <ul className="hidden lg:flex lg:gap-4">
-        <li className="navbar-item">Option 1</li>
-        <li className="navbar-item">Option 2</li>
+      <ul className="hidden lg:flex lg:gap-8">
+        <li className="navbar-item">
+          <a href="#information-section">Home</a>
+        </li>
+        <li className="navbar-item">
+          <a href="#features-section">Features</a>
+        </li>
+        <li className="navbar-item">
+          <a href="#footer-section">Social</a>
+        </li>
       </ul>
     </nav>
   );
