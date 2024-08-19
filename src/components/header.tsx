@@ -15,7 +15,7 @@ const Header = () => {
   });
 
   return (
-    <header className="flex flex-col gap-4 mb-4 lg:flex-row lg:justify-between">
+    <header className="flex flex-col gap-4 mb-8 lg:flex-row lg:justify-between">
       <p className="lg:w-[800px]">
         This is a project with which I will be practicing react and also
         integrating the api I previously built called library-api.{" "}

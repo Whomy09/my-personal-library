@@ -1,5 +1,6 @@
 import { useAuth } from "@clerk/clerk-react";
 import { Navigate, useLocation } from "react-router-dom";
+import LoadingPage from "../loading-page";
 
 type ProtectedRouteProps = {
   children: React.ReactNode
@@ -10,7 +11,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const location = useLocation();
 
   if (!isLoaded) {
-    return null;
+    return <LoadingPage />;
   }
 
   if (!isSignedIn) {

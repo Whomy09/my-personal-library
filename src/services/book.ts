@@ -19,3 +19,8 @@ export const deleteBook = async (bookId: string) => {
 export const updateBook = async (editedBook: Partial<Book>) => {
   await http.patch<Partial<Book>>(`/book/${editedBook.id}`, editedBook);
 };
+
+export const getBooksByUser = async (userId: string) => {
+  const books = await http.get<Book[]>(`/book/by-user/${userId}`);
+  return books;
+};

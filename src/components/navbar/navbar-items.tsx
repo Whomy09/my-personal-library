@@ -6,9 +6,12 @@ import {
   SignedOut,
   UserButton,
   SignInButton,
+  useUser,
 } from "@clerk/clerk-react";
 
 const NavbarItems = () => {
+  const { user } = useUser();
+
   return (
     <ul className="lg:flex lg:items-center lg:gap-4">
       <div className="hidden lg:flex lg:items-center lg:gap-4">
@@ -27,7 +30,10 @@ const NavbarItems = () => {
         </Button>
       </SignedOut>
       <SignedIn>
-        <UserButton />
+        <div className="flex gap-2">
+          <span className="font-bold">{user && user.fullName}</span>
+          <UserButton />
+        </div>
       </SignedIn>
     </ul>
   );

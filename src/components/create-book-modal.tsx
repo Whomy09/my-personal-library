@@ -33,6 +33,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useAuth } from "@clerk/clerk-react";
 
 type CreateBookModalProps = {
   open: boolean;
@@ -47,6 +48,7 @@ const CreateBookModal = ({
 }: CreateBookModalProps) => {
   const { isLoading, mutate } = mutationCreateBook;
 
+  const { userId } = useAuth();
   const { successNotification, errorNotification } = useNotifications();
 
   const form = useForm<BookCreateSchema>({
@@ -59,6 +61,7 @@ const CreateBookModal = ({
       language: "",
       publisher: "",
       numberOfPage: 1,
+      userId: userId || "",
       publicationDate: new Date(),
     },
   });
